@@ -1,0 +1,53 @@
+name: study_planner
+description: A Flutter application for study group management
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # HTTP 통신
+  http: ^1.1.0
+
+  # 상태 관리
+  provider: ^6.0.5
+
+  # 로컬 저장소
+  shared_preferences: ^2.2.1
+
+  # 날짜 선택
+  table_calendar: ^3.0.9
+
+  # UI 아이콘
+  cupertino_icons: ^1.0.6
+
+  # JSON 직렬화
+  json_annotation: ^4.8.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.6
+  json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
+
+  # 에셋 설정 (필요시)
+  # assets:
+  #   - assets/images/
+  #   - assets/icons/
+
+  # 폰트 설정 (필요시)
+  # fonts:
+  #   - family: Pretendard
+  #     fonts:
+  #       - asset: fonts/Pretendard-Regular.ttf
+  #       - asset: fonts/Pretendard-Bold.ttf
+  #         weight: 700
