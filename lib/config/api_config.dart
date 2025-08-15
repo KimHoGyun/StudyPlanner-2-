@@ -6,7 +6,7 @@ class ApiConfig {
     if (kIsWeb) {
       // TODO: 실제 백엔드 배포 URL로 변경
       // 예: 'https://your-backend.herokuapp.com'
-      return 'http://studyplanner-production-0729.up.railway.app/api'; // 개발 중에는 로컬 사용
+      return 'http://studyplanner-production-0729.up.railway.app'; // 개발 중에는 로컬 사용
     }
     // 모바일 환경 (Android/iOS)
     if (defaultTargetPlatform == TargetPlatform.android) {

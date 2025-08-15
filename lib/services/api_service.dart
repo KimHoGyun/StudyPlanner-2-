@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   // 배포된 백엔드 URL로 변경 (Railway 배포 후 받은 URL)
-  static const String baseUrl = 'http://studyplanner-production-0729.up.railway.app/api';  // 로컬 테스트용
+  static const String baseUrl = 'http://studyplanner-production-0729.up.railway.app';  // 로컬 테스트용
   // 배포 후: 'https://your-app-name.railway.app/api'
 
   // 로그인 API
