@@ -43,7 +43,7 @@ class ApiConfig {
   static String get baseUrl {
     // 웹 환경에서는 배포된 백엔드 URL 사용
     if (kIsWeb) {
-      return 'http://studyplanner-production-0729.up.railway.app';
+      return 'https://studyplanner-production-0729.up.railway.app';
     }
     // 모바일 환경 (Android/iOS)
     if (defaultTargetPlatform == TargetPlatform.android) {
