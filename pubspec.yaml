@@ -1,10 +1,12 @@
-name: study_planner
-description: A Flutter application for study group management
+name: forstudy
+description: A Flutter application for study group management and attendance tracking
+
 publish_to: 'none'
 version: 1.0.0+1
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
@@ -14,40 +16,85 @@ dependencies:
   http: ^1.1.0
 
   # 상태 관리
-  provider: ^6.0.5
+  provider: ^6.1.1
 
   # 로컬 저장소
-  shared_preferences: ^2.2.1
+  shared_preferences: ^2.2.2
 
-  # 날짜 선택
+  # 날짜 선택 및 캘린더
   table_calendar: ^3.0.9
 
   # UI 아이콘
   cupertino_icons: ^1.0.6
 
   # JSON 직렬화
-  json_annotation: ^4.8.1
+  json_annotation: ^4.9.0
+
+  # 국제화 (날짜 포맷팅)
+  intl: ^0.19.0
+
+
+  # 이미지 처리 (향후 프로필 이미지용)
+  image_picker: ^1.0.4
+
+  # 파일 처리
+  path_provider: ^2.1.1
+
+  # URL 런처 (외부 링크)
+  url_launcher: ^6.2.1
+
+  # 디바이스 정보
+  device_info_plus: ^9.1.1
+
+  # 패키지 정보
+  package_info_plus: ^4.2.0
+
+  # 네트워크 연결 체크
+  connectivity_plus: ^5.0.2
+
+  # 플래시 메시지 (향상된 스낵바)
+  fluttertoast: ^8.2.4
+
+  # 로딩 인디케이터
+  flutter_spinkit: ^5.2.0
+
+  # 차트 (출석률 시각화)
+  fl_chart: ^0.65.0
+
+  # 애니메이션
+  animations: ^2.0.8
+
+  # 캐시 네트워크 이미지
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^3.0.0
-  build_runner: ^2.4.6
+  flutter_lints: ^3.0.1
+  build_runner: ^2.4.7
   json_serializable: ^6.7.1
 
 flutter:
   uses-material-design: true
 
-  # 에셋 설정 (필요시)
-  # assets:
-  #   - assets/images/
-  #   - assets/icons/
+  # 에셋 설정
+  assets:
+    - assets/images/
+    - assets/icons/
 
-  # 폰트 설정 (필요시)
-  # fonts:
-  #   - family: Pretendard
-  #     fonts:
-  #       - asset: fonts/Pretendard-Regular.ttf
-  #       - asset: fonts/Pretendard-Bold.ttf
-  #         weight: 700
+  # 폰트 설정
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: fonts/Pretendard-Regular.ttf
+        - asset: fonts/Pretendard-Medium.ttf
+          weight: 500
+        - asset: fonts/Pretendard-Bold.ttf
+          weight: 700
+
+# 플러터 설정
+flutter_intl:
+  enabled: true
+  localizely:
+    project_id: your_project_id
