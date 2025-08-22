@@ -1111,7 +1111,7 @@ class _AttendancePageState extends State<AttendancePage> {
     try {
       final response = await http.get(
         Uri.parse('${ApiConfig.baseUrl}${ApiConfig.attendance}/user/${widget.userId}'),
-        headers: ApiConfig.getHeaders(widget.token),
+        headers: ApiConfig.getHeaders(token:widget.token),
       );
 
       if (response.statusCode == 200) {
