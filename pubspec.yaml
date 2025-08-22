@@ -79,24 +79,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  # 에셋 설정
-  assets:
-    - assets/images/
-    - assets/icons/
-
-  # 폰트 설정
-  fonts:
-    - family: Pretendard
-      fonts:
-        - asset: fonts/Pretendard-Regular.ttf
-        - asset: fonts/Pretendard-Medium.ttf
-          weight: 500
-        - asset: fonts/Pretendard-Bold.ttf
-          weight: 700
-
-# 플러터 설정
-flutter_intl:
-  enabled: true
-  localizely:
-    project_id: your_project_id
