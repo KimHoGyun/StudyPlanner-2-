@@ -130,7 +130,7 @@ class ProfilePage extends StatelessWidget {
                             SizedBox(height: 8),
                             Text('스터디 그룹 관리 및 출석 체크 앱'),
                             SizedBox(height: 8),
-                            Text('개발자: Study Team'),
+                            Text('개발자: Kim HoKyun'),
                           ],
                         ),
                         actions: [
