@@ -8,6 +8,17 @@ import '../models/chat_models.dart';
 class ChatService {
   static const String baseUrl = 'https://studyplanner-production-0729.up.railway.app';
 
+  // 공통 헤더 생성
+  static Map<String, String> _getHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    };
+  }
+
   // 채팅 메시지 전송
   static Future<Map<String, dynamic>> sendMessage({
     required int studyGroupId,
@@ -18,35 +29,47 @@ class ChatService {
     String? fileUrl,
   }) async {
     try {
+      print('=== 메시지 전송 시도 ===');
+      print('URL: $baseUrl/api/chat/send');
+      print('Data: studyGroupId=$studyGroupId, userId=$userId, content=$content');
+
+      final body = jsonEncode({
+        'studyGroupId': studyGroupId,
+        'userId': userId,
+        'content': content,
+        'messageType': messageType ?? 'text',
+        'fileName': fileName,
+        'fileUrl': fileUrl,
+      });
+
+      print('Request body: $body');
+
       final response = await http.post(
         Uri.parse('$baseUrl/api/chat/send'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: jsonEncode({
-          'studyGroupId': studyGroupId,
-          'userId': userId,
-          'content': content,
-          'messageType': messageType ?? 'text',
-          'fileName': fileName,
-          'fileUrl': fileUrl,
-        }),
+        headers: _getHeaders(),
+        body: body,
       );
 
-      print('Send Message Response Status: ${response.statusCode}');
-      print('Send Message Response Body: ${response.body}');
+      print('Response status: ${response.statusCode}');
+      print('Response headers: ${response.headers}');
+      print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        final data = jsonDecode(response.body);
+        return {
+          'success': true,
+          ...data,
+        };
       } else {
+        print('Error response: ${response.statusCode} - ${response.body}');
         return {
           'success': false,
-          'message': 'Failed to send message: ${response.statusCode}',
+          'message': 'Failed to send message: HTTP ${response.statusCode}',
+          'error': response.body,
         };
       }
     } catch (e) {
-      print('Send Message Error: $e');
+      print('Send Message Exception: $e');
       return {
         'success': false,
         'message': 'Network error: $e'
@@ -62,12 +85,11 @@ class ChatService {
         url += '&lastMessageId=$lastMessageId';
       }
 
+      print('Getting messages from: $url');
+
       final response = await http.get(
         Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
+        headers: _getHeaders(),
       );
 
       print('Get Messages Response Status: ${response.statusCode}');
@@ -76,6 +98,7 @@ class ChatService {
         final List<dynamic> data = jsonDecode(response.body);
         return data.map((json) => ChatMessage.fromJson(json)).toList();
       } else {
+        print('Failed to get messages: ${response.statusCode} - ${response.body}');
         return [];
       }
     } catch (e) {
@@ -95,6 +118,12 @@ class ChatService {
         'POST',
         Uri.parse('$baseUrl/api/files/upload'),
       );
+
+      // 헤더 추가
+      request.headers.addAll({
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      });
 
       request.fields['studyGroupId'] = studyGroupId.toString();
       request.fields['userId'] = userId.toString();
@@ -129,10 +158,7 @@ class ChatService {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/api/files/$studyGroupId'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
+        headers: _getHeaders(),
       );
 
       print('Get Files Response Status: ${response.statusCode}');
@@ -141,6 +167,7 @@ class ChatService {
         final List<dynamic> data = jsonDecode(response.body);
         return data.map((json) => FileAttachment.fromJson(json)).toList();
       } else {
+        print('Failed to get files: ${response.statusCode}');
         return [];
       }
     } catch (e) {
@@ -154,10 +181,7 @@ class ChatService {
     try {
       final response = await http.delete(
         Uri.parse('$baseUrl/api/chat/message/$messageId?userId=$userId'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
+        headers: _getHeaders(),
       );
 
       print('Delete Message Response Status: ${response.statusCode}');
@@ -184,16 +208,14 @@ class ChatService {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/api/chat/$studyGroupId/poll?since=${lastCheck.toIso8601String()}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
+        headers: _getHeaders(),
       );
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         return data.map((json) => ChatMessage.fromJson(json)).toList();
       } else {
+        print('Poll messages failed: ${response.statusCode}');
         return [];
       }
     } catch (e) {
