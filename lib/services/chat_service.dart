@@ -1,4 +1,3 @@
-// lib/services/chat_service.dart
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -34,7 +33,7 @@ class ChatService {
       );
     } on SocketException {
       throw Exception('No internet connection');
-    } on HttpException catch (e) {
+    } on HttpException catch (e)  {
       throw Exception('HTTP error: ${e.message}');
     } on FormatException {
       throw Exception('Invalid response format');
@@ -193,7 +192,6 @@ class ChatService {
     }
   }
 
-  // 파일 목록 조회
   static Future<List<FileAttachment>> getFiles(int studyGroupId) async {
     try {
       final response = await _makeRequest(() => _client.get(
@@ -216,7 +214,6 @@ class ChatService {
     }
   }
 
-  // 실시간 메시지 폴링
   static Future<List<ChatMessage>> pollNewMessages(
       int studyGroupId,
       DateTime lastCheck,
@@ -242,7 +239,6 @@ class ChatService {
     }
   }
 
-  // 메시지 삭제
   static Future<Map<String, dynamic>> deleteMessage(int messageId, int userId) async {
     try {
       final response = await _makeRequest(() => _client.delete(
@@ -269,7 +265,6 @@ class ChatService {
     }
   }
 
-  // 연결 테스트
   static Future<bool> testConnection() async {
     try {
       print('=== 서버 연결 테스트 ===');
@@ -288,7 +283,6 @@ class ChatService {
     }
   }
 
-  // 리소스 정리
   static void dispose() {
     _client.close();
   }
